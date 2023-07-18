@@ -1,0 +1,111 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "com.collabora.productivity.skyler.sidecar.App",
+            "projectName": "sidecar",
+            "vmArgs": "-Djava.library.path=../core/instdir/program:/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"
+        },
+        {
+            "name": "run in debugger after make",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/skyler/Code/collabora/core/instdir/program/soffice.bin",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/skyler/Code/collabora/core",
+            "environment": [
+                {
+                    "name": "SAL_LOG_DISABLED",
+                    "value": "+INFO.ucb+WARN"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Mark pretty-printers (in solenv/gdb) safe",
+                    "text": "add-auto-load-safe-path /home/skyler/Code/collabora/core/instdir",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Mark pretty-printers bootstrap (in instdir/program) safe",
+                    "text": "add-auto-load-safe-path /home/skyler/Code/collabora/core/instdir",
+                    "ignoreFailures": true
+                }
+            ],
+            "linux": {
+                "miDebuggerPath": "gdb"
+            },
+            "osx": {
+                "program": "/home/skyler/Code/collabora/core/instdir/MacOS/soffice",
+                "MIMode": "lldb",
+                "setupCommands": [
+                    {
+                        "description": "load helpers for lldb",
+                        "text": "command script import ${workspaceFolder:srcdir}/solenv/lldb/libreoffice/LO.py",
+                        "ignoreFailures": false
+                    }
+                ]
+            },
+            "preLaunchTask": "full make"
+        },
+        {
+            "name": "run in gdb with clear userprofile",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/skyler/Code/collabora/core/instdir/program/soffice.bin",
+            "args": [
+                "-env:UserInstallation=file:////home/skyler/Code/collabora/core/workdir/vs-code-temporary-user-profile"
+            ],
+            "stopAtEntry": false,
+            "cwd": "/home/skyler/Code/collabora/core",
+            "environment": [
+                {
+                    "name": "SAL_LOG_DISABLED",
+                    "value": "+INFO.ucb+WARN"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Mark pretty-printers (in solenv/gdb) safe",
+                    "text": "add-auto-load-safe-path ${workspaceFolder:srcdir}",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Mark pretty-printers bootstrap (in instdir/program) safe",
+                    "text": "add-auto-load-safe-path /home/skyler/Code/collabora/core/instdir",
+                    "ignoreFailures": true
+                }
+            ],
+            "linux": {
+                "miDebuggerPath": "gdb"
+            },
+            "osx": {
+                "program": "/home/skyler/Code/collabora/core/instdir/MacOS/soffice",
+                "MIMode": "lldb",
+                "setupCommands": [
+                    {
+                        "description": "load helpers for for lldb",
+                        "text": "command script import ${workspaceFolder:srcdir}/solenv/lldb/libreoffice/LO.py",
+                        "ignoreFailures": false
+                    }
+                ]
+            }
+        }
+    ]
+}
