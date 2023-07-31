@@ -16,7 +16,7 @@ public class App {
         // get the remote office component context
         com.sun.star.uno.XComponentContext xContext;
         try {
-            xContext = com.sun.star.comp.helper.Bootstrap.bootstrapWebsocketConnection(false, "localhost", 9980);
+            xContext = com.sun.star.comp.helper.Bootstrap.bootstrapWebsocketConnection(false, "localhost", 9981, "cool/http%3A%2F%2Flocalhost%3A9980%2Fwopi%2Ffiles%2Fhome%2Fskyler%2FCode%2Fcollabora%2Fonline%2Ftest%2Fdata%2Fhello-world.odt%3Faccess_token%3Dtest%26access_token_ttl%3D0/ws");
         } catch (BootstrapException e) {
             // TODO Auto-generated catch block
             System.out.println(e.getMessage());
@@ -45,7 +45,7 @@ public class App {
         XComponentLoader xComponentLoader = (XComponentLoader) UnoRuntime.queryInterface(
             XComponentLoader.class, desktop);
         PropertyValue[] loadProps = new PropertyValue[0];
-    
+
 
         XComponent xWriterComponent = xComponentLoader.loadComponentFromURL(loadUrl, "_blank", 0, loadProps);
         XTextDocument xTextDocument = (XTextDocument)UnoRuntime.queryInterface(
