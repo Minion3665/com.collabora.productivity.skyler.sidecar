@@ -3,6 +3,7 @@ package com.collabora.productivity.skyler.sidecar;
 import com.sun.star.beans.PropertyValue;
 import com.sun.star.comp.helper.BootstrapException;
 import com.sun.star.frame.XComponentLoader;
+import com.sun.star.frame.XStorable;
 import com.sun.star.lang.XComponent;
 import com.sun.star.text.XText;
 import com.sun.star.text.XTextCursor;
@@ -20,6 +21,8 @@ public class App {
         } catch (BootstrapException e) {
             // TODO Auto-generated catch block
             System.out.println(e.getMessage());
+
+            e.printStackTrace();
 
             if (e.getTargetException().getCause() != null) {
                 throw e.getTargetException().getCause();
@@ -54,22 +57,12 @@ public class App {
 
         int x = 0;
         XTextCursor cursor = xText.createTextCursor();
-        String lipsum = "\n" + //
-                "\n" + //
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac consequat justo, non fermentum felis. Suspendisse rutrum dui suscipit blandit egestas. Sed ultrices tortor dolor, eu sodales ex volutpat non. Sed faucibus nisl vitae tellus volutpat, et efficitur massa vulputate. Phasellus sed vehicula est, eu iaculis sapien. Phasellus id accumsan nisl, vel lacinia odio. Curabitur enim dui, bibendum a bibendum mattis, interdum eu turpis. Etiam nec lectus egestas libero consequat rhoncus eu vel eros. Duis in fringilla justo, a euismod felis. Donec eget sodales nibh. Suspendisse vestibulum orci lectus. Cras pellentesque feugiat massa iaculis vestibulum.\n" + //
-                "\n" + //
-                "Fusce finibus tempus risus, et facilisis quam ullamcorper sit amet. Nullam ac massa eget mi dignissim fermentum in congue erat. Aenean ornare, neque non luctus consectetur, diam dui rhoncus est, fringilla cursus ante elit ut ligula. Sed pellentesque ornare arcu, nec luctus sapien imperdiet a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus efficitur mattis sapien, sit amet lacinia diam pulvinar eget. Sed lacinia in eros lobortis vestibulum. Nam ullamcorper vulputate lectus in porttitor. In turpis orci, sagittis eget lacus in, viverra suscipit arcu. Praesent diam lorem, faucibus quis nisl a, maximus luctus nisl.\n" + //
-                "\n" + //
-                "Nam consequat interdum tincidunt. Vestibulum id velit a sapien posuere sodales dapibus eu orci. Aliquam vitae nulla facilisis, ultrices neque ut, elementum urna. Mauris consequat leo at neque porta porta. Nam diam erat, tincidunt non blandit iaculis, auctor ut quam. Vestibulum vel mi vel lorem vulputate dictum at id urna. In eu venenatis neque. Donec eget placerat lacus, at luctus lacus. Integer blandit volutpat ligula, vitae lobortis est malesuada ut.\n" + //
-                "\n" + //
-                "Nam ac laoreet dui. Etiam ut turpis maximus massa condimentum eleifend ut ut nisi. Nam et sodales leo. Cras sollicitudin mauris et suscipit tempus. In commodo faucibus mauris at aliquet. Pellentesque at consequat lorem. In interdum diam sit amet ante. ";
-        while (true) {
-            for (char character : lipsum.toCharArray()) {
-                Thread.sleep(10);
-                xText.insertString(cursor, Character.toString(character), false);
-                cursor.gotoEnd(false);
-            }
-        }
+        String lipsum = "This document was created with URP over websockets!";
+
+        xText.insertString(cursor, lipsum, false);
+
+        XStorable xStorable = (XStorable) UnoRuntime.queryInterface(XStorable.class, xTextDocument);
+        xStorable.storeToURL("file:///tmp/hello-urpws.odt", new PropertyValue[0]);
     }
 }
 
